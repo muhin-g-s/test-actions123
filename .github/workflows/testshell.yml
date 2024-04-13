@@ -31,9 +31,9 @@ jobs:
         run: npm ci
       - name: test
         id: test
-        run: echo "${{ vars.BASE_URL_DEPLOY }}$RANDOM/" >> "$GITHUB_OUTPUT"
+        run: echo "base="${{ vars.BASE_URL_DEPLOY }}$RANDOM/"" >> "$GITHUB_OUTPUT"
       - name: Build
-        run: npm run build -- --base=${{steps.test.outputs}}
+        run: npm run build -- --base=${{steps.test.outputs.base}}
       - name: test
         run: chmod +x environment.sh && ./environment.sh test
         shell: bash
