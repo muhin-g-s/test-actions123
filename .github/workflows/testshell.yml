@@ -16,6 +16,8 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    #env:
+    #base_url: ${{ vars.BASE_URL_DEPLOY }}${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: get code
@@ -27,8 +29,11 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
+      - name: test
+        id: test
+        run: echo "${{ vars.BASE_URL_DEPLOY }}$RANDOM/" >> "$GITHUB_OUTPUT"
       - name: Build
-        run: npm run build -- --base=${{ vars.BASE_URL_DEPLOY }}
+        run: npm run build -- --base=${{steps.test.outputs}}
       - name: test
         run: chmod +x environment.sh && ./environment.sh test
         shell: bash
