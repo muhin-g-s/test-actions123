@@ -1,0 +1,9 @@
+name: test
+on: workflow_dispatch
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: environment.sh test
+        shell: bash
