@@ -11,6 +11,8 @@ axios.get('/environment.json').then(async (data: AxiosResponse<IRuntimeEnvironme
 	addToEnvironment(data.data);
 	console.log(data.data);
 });
+console.log('fff');
+
 console.log(import.meta.env.BASE_URL);
 console.log(import.meta.env.PROD);
 
