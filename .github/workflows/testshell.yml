@@ -7,5 +7,5 @@ jobs:
       - name: get code
         uses: actions/checkout@v4
       - name: test
-        run: ./environment.sh test
+        run: chmod +x environment.sh && ./environment.sh test
         shell: bash
