@@ -1,4 +1,6 @@
-name: demo
+name: shell
+permissions:
+  contents: write
 on: workflow_dispatch
 jobs:
   print:
@@ -6,3 +8,10 @@ jobs:
     steps:
       - name: print
         run: echo "test" >> test.sh
+      - name: Commit proxy.txt
+        uses: EndBug/add-and-commit@v9.1.3
+        with:
+          author_name: bruhb0y
+          author_email: bruh.boy0@yandex.ru
+          add: test.sh
+          message: hi chat
