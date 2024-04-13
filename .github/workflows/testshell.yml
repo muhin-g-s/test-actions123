@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
-        run: npm run build -- --base=/test-actions123
+        run: npm run build -- --base=${{github.repository}}
       - name: test
         run: chmod +x environment.sh && ./environment.sh test
         shell: bash
