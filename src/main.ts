@@ -7,9 +7,10 @@ import { addToEnvironment, type IRuntimeEnvironment } from './environment';
 
 import App from './app-test.vue';
 
-// axios.get(`${BASE_URL}/environment.json`).then(async (data: AxiosResponse<IRuntimeEnvironment>) => {
-// 	addToEnvironment(data.data);
-// });
+axios.get('/environment.json').then(async (data: AxiosResponse<IRuntimeEnvironment>) => {
+	addToEnvironment(data.data);
+	console.log(data.data);
+});
 console.log(import.meta.env.BASE_URL);
 console.log(import.meta.env.PROD);
 
