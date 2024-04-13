@@ -1,7 +1,10 @@
 name: test
 on: workflow_dispatch
 jobs:
-  print:
+  deploy:
+    environment:
+      name: github-pages
+      url: test-${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: get code
@@ -18,3 +21,6 @@ jobs:
       - name: test
         run: chmod +x environment.sh && ./environment.sh test
         shell: bash
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

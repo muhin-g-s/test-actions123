@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import environment from './environment';
+
 import HelloWorld from './components/hello-world.vue';
 </script>
 
 <template>
 	<div>
+		{{ environment.SITE_BASE_URL }}
 		<a
 			href="https://vitejs.dev"
 			target="_blank"
