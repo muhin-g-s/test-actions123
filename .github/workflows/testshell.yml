@@ -15,7 +15,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.change-page-url.outputs.new_page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}-test
 
     runs-on: ubuntu-latest
     steps:
@@ -49,6 +49,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Override page_url
-        id: change-page-url
-        run: echo "new_page_url=${{steps.deployment.outputs.page_url}}${{steps.random-prefix.outputs.prefix}}" >> $GITHUB_OUTPUT
+      # - name: Override page_url
+      #   id: change-page-url
+      #   run: echo "new_page_url=${{steps.deployment.outputs.page_url}}qwerty" >> $GITHUB_OUTPUT
