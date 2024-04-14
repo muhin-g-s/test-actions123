@@ -15,7 +15,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: test-${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
     steps:
@@ -28,16 +28,10 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
-      - name: random-prefix
-        id: random-prefix
-        run: echo "prefix=$RANDOM" >> "$GITHUB_OUTPUT"
-      - name: prepare-url
-        id: prepare-url
-        run: echo "url="${{ vars.BASE_URL_DEPLOY }}${{steps.random-prefix.outputs.prefix}}"" >> "$GITHUB_OUTPUT"
       - name: Build
-        run: npm run build -- --base=${{steps.prepare-url.outputs.url}}
+        run: npm run build -- --base=${{ vars.BASE_URL_DEPLOY }}
       - name: test
-        run: chmod +x environment.sh && ./environment.sh ${{steps.prepare-url.outputs.url}}
+        run: chmod +x environment.sh && ./environment.sh ${{ vars.BASE_URL_DEPLOY }}
         shell: bash
       - name: Setup Pages
         uses: actions/configure-pages@v4
