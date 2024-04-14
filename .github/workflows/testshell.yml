@@ -15,9 +15,8 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    #env:
-    #base_url: ${{ vars.BASE_URL_DEPLOY }}${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.change-page-url.outputs.new_page_url }}
+
     runs-on: ubuntu-latest
     steps:
       - name: get code
@@ -35,7 +34,7 @@ jobs:
       - name: Build
         run: npm run build -- --base=${{steps.test.outputs.base}}
       - name: test
-        run: chmod +x environment.sh && ./environment.sh test
+        run: chmod +x environment.sh && ./environment.sh ${{steps.test.outputs.base}}
         shell: bash
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -47,3 +46,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Override page_url
+        id: change-page-url
+        run: echo "new_page_url=${{steps.test.outputs.base}}" >> $GITHUB_OUTPUT
