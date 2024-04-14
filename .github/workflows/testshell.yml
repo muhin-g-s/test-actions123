@@ -15,7 +15,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}-test
+      url: ${{ steps.deployment.outputs.page_url }}/test
 
     runs-on: ubuntu-latest
     steps:
