@@ -28,13 +28,16 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
-      - name: test
-        id: test
-        run: echo "base="${{ vars.BASE_URL_DEPLOY }}$RANDOM/"" >> "$GITHUB_OUTPUT"
+      - name: random-prefix
+        id: random-prefix
+        run: echo "prefix=$RANDOM" >> "$GITHUB_OUTPUT"
+      - name: prepare-url
+        id: prepare-url
+        run: echo "url="${{ vars.BASE_URL_DEPLOY }}$RANDOM"" >> "$GITHUB_OUTPUT"
       - name: Build
-        run: npm run build -- --base=${{steps.test.outputs.base}}
+        run: npm run build -- --base=${{steps.prepare-url.outputs.url}}
       - name: test
-        run: chmod +x environment.sh && ./environment.sh ${{steps.test.outputs.base}}
+        run: chmod +x environment.sh && ./environment.sh ${{steps.prepare-url.outputs.url}}
         shell: bash
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -43,9 +46,9 @@ jobs:
         with:
           # Upload dist folder
           path: './dist'
-      - name: Override page_url
-        id: change-page-url
-        run: echo "new_page_url=${{steps.test.outputs.base}}" >> $GITHUB_OUTPUT
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Override page_url
+        id: change-page-url
+        run: echo "new_page_url=${{steps.deployment.outputs.page_url}}${{steps.random-prefix.outputs.prefix}}" >> $GITHUB_OUTPUT
