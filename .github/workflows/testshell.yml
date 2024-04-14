@@ -43,9 +43,9 @@ jobs:
         with:
           # Upload dist folder
           path: './dist'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
       - name: Override page_url
         id: change-page-url
         run: echo "new_page_url=${{steps.test.outputs.base}}" >> $GITHUB_OUTPUT
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
